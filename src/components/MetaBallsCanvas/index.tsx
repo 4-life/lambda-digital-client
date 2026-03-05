@@ -6,7 +6,7 @@ function MetaBallsCanvas(): JSX.Element {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
 
     const scene = new Scene(canvas);
 

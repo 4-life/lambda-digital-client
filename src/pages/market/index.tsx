@@ -56,14 +56,14 @@ function Market() {
     {
       variables: { range: 365 },
       notifyOnNetworkStatusChange: true,
-    }
+    },
   );
 
   const [itemDetails, setItemDetails] = useState<Item | undefined>(undefined);
 
   const onChangeRange = useCallback(
     (newRange: number) => refetch({ range: newRange }),
-    [refetch]
+    [refetch],
   );
 
   const openModal = (details: Item) => {
