@@ -1,5 +1,4 @@
-@use 'sass:map';
-@import 'styles/_mixins.scss';
+@use 'styles/mixins' as *;
 
 .selector-wrap {
   @include button;

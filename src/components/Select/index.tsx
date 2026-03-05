@@ -5,7 +5,7 @@ import Select, {
   GroupBase,
   SingleValue,
 } from 'react-select';
-import { ReactComponent as ArrowUpIcon } from './icons/up.svg';
+import ArrowUpIcon from './icons/up.svg?react';
 import './style.scss';
 
 interface Option {

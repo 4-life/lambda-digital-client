@@ -1,7 +1,7 @@
 @use 'sass:map';
-@import 'styles/_colors.scss';
-@import 'styles/_spacing.scss';
-@import 'styles/_breakpoints.scss';
+@use 'styles/colors' as *;
+@use 'styles/spacing' as *;
+@use 'styles/breakpoints' as *;
 
 .Item {
   position: relative;
@@ -94,7 +94,7 @@
           margin-right: map.get($spacing, "2");
           border-radius: 10px;
           box-shadow: 0px 4px 15px 0px map.get($theme-colors, "shadow");
-          background-image: url(../../../public/images/dummy-avatar.webp);
+          background-image: url(../../images/dummy-avatar.webp);
           background-repeat: no-repeat;
           background-size: 100%;
           background-position: center center;

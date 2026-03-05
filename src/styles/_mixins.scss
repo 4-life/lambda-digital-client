@@ -1,11 +1,11 @@
 @use 'sass:map';
-@import './_colors.scss';
+@use './colors' as *;
 
 @mixin button($theme: DarkGray) {
   color: map.get($text-colors, "main");
   width: 163px;
   position: relative;
-  background: url("../../../public/images/control-border.svg");
+  background: url("../../images/control-border.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

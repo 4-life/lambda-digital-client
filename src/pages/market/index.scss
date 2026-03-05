@@ -1,7 +1,7 @@
 @use 'sass:map';
-@import 'styles/_colors.scss';
-@import 'styles/_spacing.scss';
-@import 'styles/_breakpoints.scss';
+@use 'styles/colors' as *;
+@use 'styles/spacing' as *;
+@use 'styles/breakpoints' as *;
 
 .Market {
   display: flex;

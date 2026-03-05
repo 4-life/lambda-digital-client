@@ -1,7 +1,7 @@
 @use 'sass:map';
-@import 'styles/_colors.scss';
-@import 'styles/_spacing.scss';
-@import 'styles/_breakpoints.scss';
+@use 'styles/colors' as *;
+@use 'styles/spacing' as *;
+@use 'styles/breakpoints' as *;
 
 div.Nav {
   display: flex;
@@ -9,11 +9,11 @@ div.Nav {
   align-items: flex-start;
 
   a {
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
   }
 
   a.active {
-    border-bottom: 1px solid map.get($text-colors, "secondary");
+    border-bottom: 2px solid map.get($text-colors, "secondary");
   }
 
   @media (max-width: $layout-breakpoint-large) {
