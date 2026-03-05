@@ -10,6 +10,24 @@ export default defineConfig({
     svgr(),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules/@apollo') || id.includes('node_modules/graphql')) {
+            return 'vendor-apollo';
+          }
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/') || id.includes('node_modules/scheduler')) {
+            return 'vendor-react';
+          }
+          if (id.includes('node_modules/')) {
+            return 'vendor';
+          }
+          return undefined;
+        },
+      },
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {
