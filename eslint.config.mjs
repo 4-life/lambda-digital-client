@@ -24,8 +24,10 @@ export default tseslint.config(
       'node_modules/**',
       'dist/**',
       '**/*.d.ts',
-      '**/*.test.ts',
+      '**/*.test.{ts,tsx}',
       'service-worker.js',
+      'eslint.config.mjs',
+      'vite.config.ts',
     ],
   },
 
@@ -74,6 +76,7 @@ export default tseslint.config(
       'prettier/prettier': ['warn', { singleQuote: true }],
 
       'import/no-unresolved': [1, { ignore: [''] }],
+      'import/no-extraneous-dependencies': ['error', { devDependencies: ['src/setupTests.ts'] }],
       'import/extensions': [
         'error',
         'ignorePackages',
