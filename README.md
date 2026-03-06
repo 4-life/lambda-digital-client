@@ -9,6 +9,7 @@
 ![React](https://img.shields.io/badge/-React-333333?style=flat-square&logo=React)
 ![Typescript](https://img.shields.io/badge/-Typescript-333333?style=flat-square&logo=Typescript)
 ![Sass](https://img.shields.io/badge/-Sass-333333?style=flat-square&logo=Sass)
+![GLSL](https://img.shields.io/badge/GLSL-8A2BE2)
 
 ### `npm start`
 
