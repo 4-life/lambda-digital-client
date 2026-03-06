@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -10,6 +10,11 @@ export default defineConfig({
     svgr(),
     tsconfigPaths(),
   ],
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: './src/setupTests.ts',
+  },
   build: {
     rollupOptions: {
       output: {
@@ -31,7 +36,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        loadPaths: [path.resolve(__dirname, 'src')],
+        loadPaths: [path.resolve(import.meta.dirname, 'src')],
       },
     },
   },

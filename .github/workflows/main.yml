@@ -25,7 +25,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
 
-  lint:
+  tests:
     needs: install
     runs-on: ubuntu-latest
     steps:
@@ -38,9 +38,11 @@ jobs:
 
       - name: Run linter
         run: npm run lint
+      - name: Run tests
+        run: npm test
 
   build:
-    needs: lint
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

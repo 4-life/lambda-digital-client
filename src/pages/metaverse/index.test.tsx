@@ -1,9 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Market from './index';
+import { vi } from 'vitest';
+import Metaverse from './index';
+
+vi.mock('components/MetaBallsCanvas', () => ({ default: () => null }));
 
 test('renders page title', () => {
-  render(<Market />);
-  const title = screen.getByText(/Metaverse/i);
+  render(<Metaverse />);
+  const title = screen.getByRole('heading', { name: /Enter the Metaverse/i });
   expect(title).toBeInTheDocument();
 });
