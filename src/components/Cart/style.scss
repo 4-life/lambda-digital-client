@@ -1,0 +1,239 @@
+@use 'sass:map';
+@use 'styles/colors' as *;
+@use 'styles/spacing' as *;
+@use 'styles/breakpoints' as *;
+@use 'styles/mixins' as *;
+
+.CartIcon {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: map.get($spacing, "1");
+
+  .icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url(../../../public/icons/basket.svg) center/contain no-repeat;
+  }
+
+  .badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: map.get($theme-colors, "danger");
+    color: map.get($text-colors, "main");
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+  }
+}
+
+.CartModal {
+  background: rgba(43, 51, 64, .85);
+  border-radius: map.get($spacing, "3");
+  box-shadow: 0px 4px 35px 0px map.get($theme-colors, "shadow");
+  overflow: hidden;
+  color: map.get($text-colors, "main");
+
+  .cartHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: map.get($spacing, "2") map.get($spacing, "3");
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h2 { margin: 0; }
+
+  }
+
+  .contractInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px map.get($spacing, "1");
+    margin: 0;
+    padding: map.get($spacing, "1") 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    dt {
+      font-size: 7pt;
+      color: map.get($text-colors, "shadowed");
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    dd {
+      margin: 0;
+      font-size: 8pt;
+      font-weight: 600;
+      color: map.get($text-colors, "main");
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .empty {
+    padding: map.get($spacing, "3") map.get($spacing, "2");
+    text-align: center;
+    color: map.get($text-colors, "shadowed");
+  }
+
+  .cartList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .cartItem {
+    display: flex;
+    align-items: center;
+    gap: map.get($spacing, "1");
+    padding: map.get($spacing, "1") map.get($spacing, "3");
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    .thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: map.get($spacing, "1");
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      margin: 0;
+    }
+
+    .info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, "1");
+      min-width: 0;
+
+      .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0;
+        margin: 0;
+        box-shadow: 0px 4px 15px 0px map.get($theme-colors, "shadow");
+      }
+
+      .meta {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+
+        .title {
+          font-size: 10pt;
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .author {
+          font-size: 8pt;
+          color: map.get($text-colors, "shadowed");
+        }
+      }
+
+      .price {
+        font-size: 10pt;
+        font-weight: 700;
+        white-space: nowrap;
+        color: map.get($text-colors, "secondary");
+      }
+    }
+
+    .removeBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: map.get($text-colors, "main");
+      opacity: 0.4;
+      padding: 4px;
+      flex-shrink: 0;
+      &:hover { opacity: 1; }
+
+      .icon {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        background: url(../../../public/icons/close-button-icon.svg) no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+
+  .cartFooter {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, "2");
+    padding: map.get($spacing, "2") map.get($spacing, "3");
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    .total {
+      font-size: 17px;
+      font-weight: 700;
+      color: map.get($text-colors, "main");
+      text-align: right;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .checkoutBtn {
+        @include button;
+        padding: 23px 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .icon {
+          display: inline-block;
+          width: 17px;
+          height: 17px;
+          background: url(../../../public/icons/basket.svg) no-repeat;
+          background-size: contain;
+        }
+      }
+
+      .close {
+        @include button;
+        padding: 23px 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background: rgba(0, 0, 0, .2);
+
+        .icon {
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          background: url(../../../public/icons/close-button-icon.svg) no-repeat;
+          background-size: contain;
+        }
+      }
+    }
+  }
+}

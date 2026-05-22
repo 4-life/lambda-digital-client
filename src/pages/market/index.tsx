@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Modal, { Styles } from 'react-modal';
 import ItemComponent from 'components/Item';
 import { useQuery, gql } from '@apollo/client';
@@ -7,6 +7,9 @@ import Selector from 'components/Select';
 import { Item, ItemsData, ItemsVars } from 'types';
 import ItemDetails from 'components/ItemDetails';
 import Loader from 'components/Loader';
+
+const PAGE_SIZE = 12;
+const INITIAL_VARS = { range: 365, limit: PAGE_SIZE, offset: 0 };
 
 Modal.setAppElement('#root');
 const customStyles: Styles = {
@@ -32,8 +35,8 @@ const customStyles: Styles = {
 };
 
 const GET_ITEMS = gql`
-  query GetItems($range: Int!) {
-    items(range: $range) {
+  query GetItems($range: Int!, $limit: Int!, $offset: Int!) {
+    items(range: $range, limit: $limit, offset: $offset) {
       id
       pic
       author {
@@ -51,28 +54,69 @@ const GET_ITEMS = gql`
 `;
 
 function Market() {
-  const { loading, error, data, refetch } = useQuery<ItemsData, ItemsVars>(
-    GET_ITEMS,
-    {
-      variables: { range: 365 },
-      notifyOnNetworkStatusChange: true,
-    },
-  );
+  const { loading, error, data, fetchMore, refetch } = useQuery<
+    ItemsData,
+    ItemsVars
+  >(GET_ITEMS, {
+    variables: INITIAL_VARS,
+    notifyOnNetworkStatusChange: true,
+  });
 
   const [itemDetails, setItemDetails] = useState<Item | undefined>(undefined);
+  const [allItems, setAllItems] = useState<Item[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (data?.items) {
+      setAllItems(data.items);
+      setHasMore(data.items.length === PAGE_SIZE);
+    }
+  }, [data]);
+
+  const loadMore = useCallback(async () => {
+    if (isFetchingMore || !hasMore) return;
+    setIsFetchingMore(true);
+    try {
+      const { data: more } = await fetchMore({
+        variables: { offset: allItems.length },
+      });
+      const next = more?.items ?? [];
+      setAllItems((prev) => [...prev, ...next]);
+      setHasMore(next.length === PAGE_SIZE);
+    } finally {
+      setIsFetchingMore(false);
+    }
+  }, [fetchMore, allItems.length, hasMore, isFetchingMore]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadMore();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(sentinel);
+    // eslint-disable-next-line consistent-return
+    return () => observer.disconnect();
+  }, [loadMore]);
 
   const onChangeRange = useCallback(
-    (newRange: number) => refetch({ range: newRange }),
+    (newRange: number) => {
+      setAllItems([]);
+      setHasMore(true);
+      refetch({ range: newRange, limit: PAGE_SIZE, offset: 0 });
+    },
     [refetch],
   );
 
-  const openModal = (details: Item) => {
-    setItemDetails(details);
-  };
-
-  const closeModal = () => {
-    setItemDetails(undefined);
-  };
+  const openModal = (details: Item) => setItemDetails(details);
+  const closeModal = () => setItemDetails(undefined);
 
   return (
     <div className="Market">
@@ -81,16 +125,20 @@ function Market() {
         <Selector onChange={(e) => onChangeRange(e?.value || 0)} />
       </div>
       <main>
-        <div className="itemsLoader">{loading && <Loader />}</div>
         {error && <p>Can&apos;t load items</p>}
         {!loading && !data?.items.length && !error && <p>No items</p>}
-        {data?.items.map((d) => (
+        {allItems.map((d: Item) => (
           <ItemComponent key={d.id} item={d} show={openModal} />
         ))}
+        {isFetchingMore && <Loader />}
+        {hasMore && !isFetchingMore && (
+          <div ref={sentinelRef} style={{ width: '100%', height: 1 }} />
+        )}
         {/* hidden items for saving flex grid */}
         {[...Array(10)].map((_d, i) => (
           <ItemComponent key={`hidden${i + 1}`} item={undefined} />
         ))}
+        <div className="itemsLoader">{loading && <Loader />}</div>
       </main>
       <Modal
         isOpen={!!itemDetails}

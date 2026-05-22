@@ -1,5 +1,5 @@
-import React from 'react';
 import { NavLink } from 'react-router';
+import Cart from 'components/Cart';
 
 import './index.scss';
 
@@ -20,6 +20,7 @@ function Nav() {
       >
         Metaverse
       </NavLink>
+      <Cart />
     </div>
   );
 }

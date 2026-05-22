@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import env from 'environment';
 import Layout from 'components/Layout';
+import { CartProvider } from 'context/CartContext';
 import Market from 'pages/market';
 import Metaverse from 'pages/metaverse';
 import reportWebVitals from './reportWebVitals';
@@ -23,14 +24,16 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Market />} />
-            <Route path="metaverse" element={<Metaverse />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Market />} />
+              <Route path="metaverse" element={<Metaverse />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </ApolloProvider>
   </React.StrictMode>,
 );

@@ -6,7 +6,7 @@
 div.Nav {
   display: flex;
   gap: map.get($spacing, "3");
-  align-items: flex-start;
+  align-items: center;
 
   a {
     border-bottom: 2px solid transparent;

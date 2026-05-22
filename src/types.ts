@@ -1,11 +1,11 @@
 export interface Author {
-  id?: number;
+  id?: string;
   name: string;
   avatar?: string;
 }
 
 export interface Item {
-  id?: number;
+  id?: string;
   pic?: string;
   author: Author;
   views: number;
@@ -22,4 +22,6 @@ export interface ItemsData {
 
 export interface ItemsVars {
   range: number;
+  limit: number;
+  offset: number;
 }

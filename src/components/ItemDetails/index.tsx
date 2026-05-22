@@ -4,10 +4,19 @@ import './style.scss';
 import { getAvatarsUrl, getImageUrl } from 'utils/getImagesUrl';
 import getTimeAgo from 'utils/timeAgo';
 import kFormatter from 'utils/kFormatter';
+import { useCart } from 'context/CartContext';
 
 type Props = { item: Item; close?: () => void };
 
 function ItemDetails({ item, close }: Props) {
+  const { addToCart, isInCart } = useCart();
+  const inCart = item.id ? isInCart(item.id) : false;
+
+  const handleBuy = () => {
+    addToCart(item);
+    close?.();
+  };
+
   return (
     <div className="ItemDetails">
       <figure
@@ -43,8 +52,13 @@ function ItemDetails({ item, close }: Props) {
         </div>
 
         <div className="actions">
-          <button className="buy" type="button" onClick={close}>
-            Buy
+          <button
+            className="buy"
+            type="button"
+            onClick={handleBuy}
+            disabled={inCart}
+          >
+            {inCart ? 'In cart' : 'Buy'}
             <span className="icon" />
           </button>
           <button className="close" type="button" onClick={close}>
