@@ -20,8 +20,8 @@ function DropdownIndicator() {
 const rangeOptions: Options<Option> = [
   { value: 3650, label: 'All' },
   { value: 7, label: '1 Week' },
-  { value: 90, label: '3 Month' },
-  { value: 365, label: '1 Year' },
+  { value: 30, label: '1 Month' },
+  { value: 90, label: '3 Months' },
 ];
 
 const activeBackgroundColor =

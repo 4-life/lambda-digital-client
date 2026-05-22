@@ -83,7 +83,7 @@ function Market() {
       <main>
         <div className="itemsLoader">{loading && <Loader />}</div>
         {error && <p>Can&apos;t load items</p>}
-        {!loading && !data?.items.length && <p>No items</p>}
+        {!loading && !data?.items.length && !error && <p>No items</p>}
         {data?.items.map((d) => (
           <ItemComponent key={d.id} item={d} show={openModal} />
         ))}
