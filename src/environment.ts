@@ -2,16 +2,16 @@ export default function env() {
   if (process.env.NODE_ENV === 'production') {
     return {
       PRODUCTION: true,
-      imagesUrl: 'https://images.xn--wxa.digital/nfts',
-      avatarsUrls: 'https://images.xn--wxa.digital/avatars',
-      uri: 'https://api.xn--wxa.digital',
+      imagesUrl: 'https://images.λ.digital/nfts',
+      avatarsUrls: 'https://images.λ.digital/avatars',
+      uri: 'https://api.λ.digital',
     };
   }
 
   return {
     PRODUCTION: false,
-    imagesUrl: 'https://images.xn--wxa.digital/nfts',
-    avatarsUrls: 'https://images.xn--wxa.digital/avatars',
+    imagesUrl: 'https://images.λ.digital/nfts',
+    avatarsUrls: 'https://images.λ.digital/avatars',
     uri: 'http://localhost:3005',
   };
 }
