@@ -1,4 +1,11 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Item } from 'types';
 
 const STORAGE_KEY = 'cart';
@@ -27,7 +34,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const addToCart = useCallback((item: Item) => {
-    setItems((prev) => (prev.some((i) => i.id === item.id) ? prev : [...prev, item]));
+    setItems((prev) =>
+      prev.some((i) => i.id === item.id) ? prev : [...prev, item],
+    );
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
@@ -39,11 +48,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [items],
   );
 
-  return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, isInCart }}>
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({ items, addToCart, removeFromCart, isInCart }),
+    [items, addToCart, removeFromCart, isInCart],
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
