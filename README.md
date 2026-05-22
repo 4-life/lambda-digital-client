@@ -23,4 +23,4 @@ Launches the test runner
 
 ## Back-end repo:
 
-https://github.com/4-life/lambda-digital-server
+https://github.com/4-life/lambda-digital-api
