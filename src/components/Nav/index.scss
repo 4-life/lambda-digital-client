@@ -15,8 +15,4 @@ div.Nav {
   a.active {
     border-bottom: 2px solid map.get($text-colors, "secondary");
   }
-
-  @media (max-width: $layout-breakpoint-large) {
-    padding-bottom: map.get($spacing, "3");
-  }
 }

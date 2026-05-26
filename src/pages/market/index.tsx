@@ -130,15 +130,13 @@ function Market() {
         {allItems.map((d: Item) => (
           <ItemComponent key={d.id} item={d} show={openModal} />
         ))}
-        {isFetchingMore && <Loader />}
         {hasMore && !isFetchingMore && (
           <div ref={sentinelRef} style={{ width: '100%', height: 1 }} />
         )}
-        {/* hidden items for saving flex grid */}
-        {[...Array(10)].map((_d, i) => (
-          <ItemComponent key={`hidden${i + 1}`} item={undefined} />
-        ))}
-        <div className="itemsLoader">{loading && <Loader />}</div>
+        <div className="itemsLoader">
+          {(loading || isFetchingMore) && <Loader />}
+          <Loader />
+        </div>
       </main>
       <Modal
         isOpen={!!itemDetails}

@@ -16,15 +16,17 @@
     justify-content: flex-end;
     padding-left: 10vw;
     padding-top: map.get($spacing, "3");
+    gap: map.get($spacing, "3") * 2;
 
-    @media (max-width: $layout-breakpoint-large) {
+    @media (max-width: $layout-breakpoint-medium) {
       padding-left: 0;
+      gap: map.get($spacing, "2");
       justify-content: space-around;
     }
   }
 
   @media (max-width: $layout-breakpoint-large) {
-    padding-left: 0;
-    padding-right: 0;
+    padding-right: map.get($spacing, "2");
+    padding-left: map.get($spacing, "2");
   }
 }
