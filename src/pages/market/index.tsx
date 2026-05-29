@@ -135,7 +135,6 @@ function Market() {
         )}
         <div className="itemsLoader">
           {(loading || isFetchingMore) && <Loader />}
-          <Loader />
         </div>
       </main>
       <Modal
